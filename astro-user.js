@@ -17,6 +17,7 @@ Item = Astro.Class({
 Meteor.methods({
   '/item/save': function(item) {
     item.save();
+    return item;
   }
 });
 
@@ -33,7 +34,9 @@ if (Meteor.isClient) {
       item.set({
         name: name
       });
-      Meteor.call('/item/save', item);
+      Meteor.call('/item/save', item, function(err, item) {
+        console.log(item.userId);
+      });
     }
   });
 }
